@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Todo App</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/all.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Todo List</h1>
+      <input
+        id="todo-input"
+        type="text"
+        placeholder="Enter something to do..."
+      />
+      <input id="add-todo" type="button" value="Add Todo" />
+      <div class="todo-wrapper">
+        <p class="list-heading">My Todos:</p>
+        <hr />
+        <ul id="todo-list"></ul>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
