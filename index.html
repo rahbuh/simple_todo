@@ -20,14 +20,27 @@
         type="text"
         placeholder="Enter something to do..."
       />
-      <input id="add-todo" type="button" value="Add Todo" />
+      <input
+        id="add-todo"
+        class="btn btn-green"
+        type="button"
+        value="Add Todo"
+      />
       <div class="todo-wrapper">
         <div class="text-container">
           <p class="list-heading">My Todos</p>
           <p class="description">Click on todo to mark complete</p>
         </div>
         <hr />
-        <ul id="todo-list"></ul>
+        <ol id="todo-list"></ol>
+      </div>
+      <div class="controls">
+        <button id="hide-complete" class="btn btn-orange">
+          Hide Completed
+        </button>
+        <button id="remove-complete" class="btn btn-orange">
+          Delete All Completed
+        </button>
       </div>
     </div>
     <script src="./script.js"></script>
