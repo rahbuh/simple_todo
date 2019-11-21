@@ -1,7 +1,11 @@
 (function() {
   const addButton = document.getElementById("add-todo");
+  const hideCompleted = document.getElementById("hide-complete");
+  const deleteAllCompleted = document.getElementById("remove-complete");
   const todoList = document.getElementById("todo-list");
   const todosArray = JSON.parse(window.localStorage.getItem("todoList")) || [];
+
+  let displayCompleted = true;
 
   renderTodos();
 
@@ -9,8 +13,7 @@
     const todoInput = document.getElementById("todo-input");
     if (todoInput.value) {
       todosArray.push(new createTodo(todoInput.value));
-      saveToStorage(todosArray);
-      renderTodos();
+      updateList();
       todoInput.value = "";
     }
   };
@@ -21,10 +24,27 @@
 
     if (element === "i") {
       deleteTodo(itemId);
+      updateList();
     }
     if (element === "span") {
       toggleCompleted(itemId);
+      updateList();
     }
+  });
+
+  hideCompleted.addEventListener("click", () => {
+    displayCompleted = !displayCompleted;
+    renderTodos();
+  });
+
+  deleteAllCompleted.addEventListener("click", () => {
+    debugger;
+    todosArray.forEach((todo, index) => {
+      if (todo.completed) {
+        deleteTodo(index);
+      }
+    });
+    updateList();
   });
 
   function createTodo(todoText) {
@@ -38,7 +58,13 @@
     todoList.innerHTML = "";
     if (todosArray.length) {
       todosArray.forEach((todo, index) => {
-        createTodoItem(todo, index);
+        if (displayCompleted) {
+          createTodoItem(todo, index);
+          hideCompleted.innerText = "Hide Completed";
+        } else if (!todo.completed) {
+          createTodoItem(todo, index);
+          hideCompleted.innerText = "Show Completed";
+        }
       });
     } else {
       todoList.innerHTML = "No todos";
@@ -65,17 +91,18 @@
 
   function deleteTodo(id) {
     todosArray.splice(id, 1);
-    saveToStorage(todosArray);
-    renderTodos();
   }
 
   function toggleCompleted(id) {
     todosArray[id].completed = !todosArray[id].completed;
-    saveToStorage(todosArray);
-    renderTodos();
   }
 
   function saveToStorage(list) {
     window.localStorage.setItem("todoList", JSON.stringify(list));
+  }
+
+  function updateList() {
+    saveToStorage(todosArray);
+    renderTodos();
   }
 })();
