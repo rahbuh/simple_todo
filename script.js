@@ -3,16 +3,22 @@
   const hideCompleted = document.getElementById("hide-complete");
   const deleteAllCompleted = document.getElementById("remove-complete");
   const todoList = document.getElementById("todo-list");
-  let todosArray = JSON.parse(window.localStorage.getItem("todoList")) || [];
 
+  let todosArray = JSON.parse(window.localStorage.getItem("todoList")) || [];
   let displayCompleted = true;
 
+  document.addEventListener("keyup", e => {
+    if (e.key === "Enter") {
+      newTodo();
+    }
+  });
+
   addButton.addEventListener("click", newTodo);
-  
+
   todoList.addEventListener("click", e => {
     const element = e.srcElement.localName;
     const itemId = e.target.parentNode.id;
-    
+
     if (element === "i") {
       deleteTodo(itemId);
       updateList();
@@ -22,18 +28,18 @@
       updateList();
     }
   });
-  
+
   hideCompleted.addEventListener("click", () => {
     displayCompleted = !displayCompleted;
     renderTodos();
   });
-  
+
   deleteAllCompleted.addEventListener("click", () => {
-    const filteredList = todosArray.filter(todo => !todo.completed)
-    todosArray = [...filteredList]
+    const filteredList = todosArray.filter(todo => !todo.completed);
+    todosArray = [...filteredList];
     updateList();
   });
-  
+
   renderTodos();
 
   function newTodo() {
@@ -73,19 +79,19 @@
   function createTodoItem(todo) {
     const listItem = document.createElement("li");
     const todoSpan = document.createElement("span");
-    const trashCan = document.createElement("i");
+    const deleteTodoIcon = document.createElement("i");
 
     listItem.id = todo.id;
     listItem.classList = "todo-item";
     todoSpan.textContent = todo.text;
-    trashCan.classList = "fas fa-trash";
+    deleteTodoIcon.classList = "fas fa-trash";
 
     if (todo.completed) {
       todoSpan.classList = "completed";
     }
 
     listItem.appendChild(todoSpan);
-    listItem.appendChild(trashCan);
+    listItem.appendChild(deleteTodoIcon);
     todoList.appendChild(listItem);
   }
 
