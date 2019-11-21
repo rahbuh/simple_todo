@@ -40,8 +40,6 @@
     updateList();
   });
 
-  renderTodos();
-
   function newTodo() {
     const todoInput = document.getElementById("todo-input");
     if (todoInput.value) {
@@ -118,4 +116,7 @@
   function locateTodoItem(id) {
     return todosArray.findIndex(todo => todo.id === id);
   }
+
+  renderTodos();
+  
 })();
