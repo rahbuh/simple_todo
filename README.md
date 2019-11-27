@@ -1,3 +1,3 @@
 # Simple Todo
 
-<img src="./readme-images/screenshot.jpg">
+<img src="./readme-images/screenshot.JPG">
