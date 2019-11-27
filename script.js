@@ -18,7 +18,6 @@
   todoList.addEventListener("click", e => {
     const element = e.srcElement.localName;
     const itemId = e.target.parentNode.id;
-
     if (element === "i") {
       deleteTodo(itemId);
       updateList();
@@ -40,23 +39,6 @@
     updateList();
   });
 
-  function newTodo() {
-    const todoInput = document.getElementById("todo-input");
-    if (todoInput.value) {
-      todosArray.push(new createTodo(todoInput.value));
-      updateList();
-      todoInput.value = "";
-    }
-  }
-
-  function createTodo(todoText) {
-    return {
-      id: String(Date.now()),
-      text: todoText,
-      completed: false
-    };
-  }
-
   function renderTodos() {
     todoList.innerHTML = "";
     if (todosArray.length) {
@@ -72,6 +54,24 @@
     } else {
       todoList.innerHTML = "No todos";
     }
+  }
+
+  function newTodo() {
+    const todoInput = document.getElementById("todo-input");
+    if (todoInput.value) {
+      // todosArray = [...todosArray, (new createTodo(todoInput.value))]
+      todosArray.push(new createTodo(todoInput.value));
+      updateList();
+      todoInput.value = "";
+    }
+  }
+
+  function createTodo(todoText) {
+    return {
+      id: String(Date.now()),
+      text: todoText,
+      completed: false
+    };
   }
 
   function createTodoItem(todo) {
@@ -94,7 +94,8 @@
   }
 
   function deleteTodo(id) {
-    todosArray.splice(id, 1);
+    const todoIndex = locateTodoItem(id);
+    todosArray.splice(todoIndex, 1);
   }
 
   function toggleCompleted(id) {
@@ -118,5 +119,4 @@
   }
 
   renderTodos();
-  
 })();
