@@ -7,9 +7,7 @@
   let displayCompleted = true;
 
   document.addEventListener("keyup", e => {
-    if (e.key === "Enter") {
-      newTodo();
-    }
+    if (e.key === "Enter") newTodo();
   });
 
   addButton.addEventListener("click", newTodo);
@@ -18,12 +16,8 @@
     const element = e.srcElement.localName;
     const itemId = e.target.parentNode.id;
 
-    if (element === "i") {
-      deleteTodo(itemId);
-    }
-    if (element === "span") {
-      toggleCompleted(itemId);
-    }
+    if (element === "i") deleteTodo(itemId);
+    if (element === "span") toggleCompleted(itemId);
   });
 
   hideCompleted.addEventListener("click", () => {
@@ -82,9 +76,7 @@
     todoSpan.textContent = todo.text;
     deleteTodoIcon.classList = "fas fa-trash";
 
-    if (todo.completed) {
-      todoSpan.classList = "completed";
-    }
+    if (todo.completed) todoSpan.classList = "completed";
 
     listItem.appendChild(todoSpan);
     listItem.appendChild(deleteTodoIcon);
