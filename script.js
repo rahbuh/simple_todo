@@ -3,7 +3,6 @@
   const hideCompleted = document.getElementById("hide-complete");
   const deleteAllCompleted = document.getElementById("remove-complete");
   const todoList = document.getElementById("todo-list");
-
   let todosArray = JSON.parse(window.localStorage.getItem("todoList")) || [];
   let displayCompleted = true;
 
@@ -18,13 +17,12 @@
   todoList.addEventListener("click", e => {
     const element = e.srcElement.localName;
     const itemId = e.target.parentNode.id;
+
     if (element === "i") {
       deleteTodo(itemId);
-      updateList();
     }
     if (element === "span") {
       toggleCompleted(itemId);
-      updateList();
     }
   });
 
@@ -34,10 +32,24 @@
   });
 
   deleteAllCompleted.addEventListener("click", () => {
-    const filteredList = todosArray.filter(todo => !todo.completed);
-    todosArray = [...filteredList];
-    updateList();
+    updateList(todosArray.filter(todo => !todo.completed));
   });
+
+  function newTodo() {
+    const todoInput = document.getElementById("todo-input");
+    if (todoInput.value) {
+      updateList([...todosArray, new todoObject(todoInput.value)]);
+      todoInput.value = "";
+    }
+  }
+
+  function todoObject(todoText) {
+    return {
+      id: String(Date.now()),
+      text: todoText,
+      completed: false
+    };
+  }
 
   function renderTodos() {
     todoList.innerHTML = "";
@@ -54,24 +66,6 @@
     } else {
       todoList.innerHTML = "No todos";
     }
-  }
-
-  function newTodo() {
-    const todoInput = document.getElementById("todo-input");
-    if (todoInput.value) {
-      // todosArray = [...todosArray, (new createTodo(todoInput.value))]
-      todosArray.push(new createTodo(todoInput.value));
-      updateList();
-      todoInput.value = "";
-    }
-  }
-
-  function createTodo(todoText) {
-    return {
-      id: String(Date.now()),
-      text: todoText,
-      completed: false
-    };
   }
 
   function createTodoItem(todo) {
@@ -93,25 +87,28 @@
     todoList.appendChild(listItem);
   }
 
+  function updateList(updatedTodos) {
+    todosArray = [...updatedTodos];
+    saveToStorage(todosArray);
+    renderTodos(todosArray);
+  }
+
   function deleteTodo(id) {
-    const todoIndex = locateTodoItem(id);
-    todosArray.splice(todoIndex, 1);
+    updateList(todosArray.filter(todo => todo.id !== id));
   }
 
   function toggleCompleted(id) {
     const todoIndex = locateTodoItem(id);
+    const toggleList = [...todosArray];
+
     if (todoIndex >= 0) {
-      todosArray[todoIndex].completed = !todosArray[todoIndex].completed;
+      toggleList[todoIndex].completed = !toggleList[todoIndex].completed;
     }
+    updateList(toggleList);
   }
 
   function saveToStorage(list) {
     window.localStorage.setItem("todoList", JSON.stringify(list));
-  }
-
-  function updateList() {
-    saveToStorage(todosArray);
-    renderTodos();
   }
 
   function locateTodoItem(id) {
