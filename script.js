@@ -63,6 +63,10 @@
           hideCompleted.innerText = "Show Completed";
         }
       });
+      if (!todoList.innerHTML) {
+        todoList.innerHTML = "All todos are completed";
+        hideCompleted.innerText = "Show Completed";
+      }
     } else {
       todoList.innerHTML = "No todos";
     }
