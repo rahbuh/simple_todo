@@ -92,7 +92,7 @@ li:nth-child(even) {
 }
 
 .btn-orange {
-  background-color: #cc6600;
+  background-color: #ff8000;
   color: #fff;
 }
 
@@ -102,6 +102,6 @@ li:nth-child(even) {
 }
 
 .btn-orange:hover {
-  background-color: #ff8000;
+  background-color: #cc6600;
   color: #fff;
 }
