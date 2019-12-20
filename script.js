@@ -3,37 +3,50 @@
   const hideCompleted = document.getElementById("hide-complete");
   const deleteAllCompleted = document.getElementById("remove-complete");
   const todoList = document.getElementById("todo-list");
+  const todoInput = document.getElementById("todo-input");
   let todosArray = JSON.parse(window.localStorage.getItem("todoList")) || [];
   let displayCompleted = true;
 
-  document.addEventListener("keyup", e => {
+  function init() {
+    addListeners();
+    renderTodos();
+    todoInput.focus();
+  }
+
+  function addListeners() {
+    document.addEventListener("keyup", enterKeyPress);
+    todoList.addEventListener("click", addButtonClick);
+    addButton.addEventListener("click", newTodo);
+    hideCompleted.addEventListener("click", hideCompletedAction);
+    deleteAllCompleted.addEventListener("click", deleteAllAction);
+  }
+
+  function enterKeyPress(e) {
     if (e.key === "Enter") newTodo();
-  });
+  }
 
-  addButton.addEventListener("click", newTodo);
-
-  todoList.addEventListener("click", e => {
+  function addButtonClick(e) {
     const element = e.srcElement.localName;
     const itemId = e.target.parentNode.id;
 
     if (element === "i") deleteTodo(itemId);
     if (element === "span") toggleCompleted(itemId);
-  });
+  }
 
-  hideCompleted.addEventListener("click", () => {
+  function hideCompletedAction() {
     displayCompleted = !displayCompleted;
     renderTodos();
-  });
+  }
 
-  deleteAllCompleted.addEventListener("click", () => {
+  function deleteAllAction() {
     updateList(todosArray.filter(todo => !todo.completed));
-  });
+  }
 
   function newTodo() {
-    const todoInput = document.getElementById("todo-input");
     if (todoInput.value) {
       updateList([...todosArray, new todoObject(todoInput.value)]);
       todoInput.value = "";
+      todoInput.focus();
     }
   }
 
@@ -111,5 +124,5 @@
     return todosArray.findIndex(todo => todo.id === id);
   }
 
-  renderTodos();
+  init();
 })();
