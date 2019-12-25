@@ -80,26 +80,26 @@
   }
 
   function createTodoItem(todo) {
-    const listItem = document.createElement("li");
-    const todoSpan = document.createElement("span");
-    const deleteTodoIcon = document.createElement("i");
-
-    listItem.id = todo.id;
-    listItem.classList = "todo-item";
-    todoSpan.textContent = todo.text;
-    deleteTodoIcon.classList = "fas fa-trash";
-
-    if (todo.completed) todoSpan.classList = "completed";
-
-    listItem.appendChild(todoSpan);
-    listItem.appendChild(deleteTodoIcon);
-    todoList.appendChild(listItem);
+    if (todo.completed) {
+      todoList.insertAdjacentHTML(
+        "beforeend",
+        `<li id="${todo.id}" class="todo-item"><span class="completed">${todo.text}</span><i class="fas fa-trash"></i></li>`
+      );
+    } else {
+      todoList.insertAdjacentHTML(
+        "beforeend",
+        `<li id="${todo.id}" class="todo-item"><span>${todo.text}</span><i class="fas fa-trash"></i></li>`
+      );
+    }
   }
 
   function updateList(updatedTodos) {
-    todosArray = [...updatedTodos];
-    saveToStorage(todosArray);
-    renderTodos(todosArray);
+    todosArray = updatedTodos.map(todo => {
+      return { ...todo };
+    });
+
+    saveToStorage(updatedTodos);
+    renderTodos();
   }
 
   function deleteTodo(id) {
@@ -108,7 +108,9 @@
 
   function toggleCompleted(id) {
     const todoIndex = locateTodoItem(id);
-    const toggleList = [...todosArray];
+    const toggleList = todosArray.map(todo => {
+      return { ...todo };
+    });
 
     if (todoIndex >= 0) {
       toggleList[todoIndex].completed = !toggleList[todoIndex].completed;
