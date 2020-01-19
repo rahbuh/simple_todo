@@ -97,8 +97,11 @@
     todosArray = updatedTodos.map(todo => {
       return { ...todo };
     });
-
-    saveToStorage(updatedTodos);
+    if (!updatedTodos.length) {
+      window.localStorage.removeItem("todoList");
+    } else {
+      saveToStorage(updatedTodos);
+    }
     renderTodos();
   }
 
