@@ -56,7 +56,7 @@ li:nth-child(even) {
   width: 500px;
   margin: 20px auto;
   padding: 0 20px 20px;
-  border: 1px solid #808080;
+  border: 1px solid #ddd;
 }
 
 .completed {
