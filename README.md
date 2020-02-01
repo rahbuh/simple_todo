@@ -16,5 +16,5 @@ I built this todo list to test my basic JS knowledge. Not too long ago, if I wer
 <img src="./readme-images/javascript.svg" width="50">&nbsp;&nbsp;
 
 ## Author
-Rob Kramer
+Rob Kramer</br>
 Full-Stack Developer
