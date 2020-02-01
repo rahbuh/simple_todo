@@ -102,13 +102,13 @@
     todoListUl.innerHTML = "";
 
     if (todosArray.length) {
+      displayCompleted
+        ? (hideCompletedBtn.innerText = "Hide Completed")
+        : (hideCompletedBtn.innerText = "Show Completed");
+
       todosArray.forEach(todo => {
-        if (displayCompleted) {
+        if (displayCompleted || !todo.completed) {
           todoListUl.appendChild(createTodoItem(todo));
-          hideCompletedBtn.innerText = "Hide Completed";
-        } else if (!todo.completed) {
-          todoListUl.appendChild(createTodoItem(todo));
-          hideCompletedBtn.innerText = "Show Completed";
         }
       });
       if (!todoListUl.innerHTML) {
