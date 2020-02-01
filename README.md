@@ -2,7 +2,7 @@
 
 _Just another todo list_
 
-You can see it in action [here](href="https://rahbuhkeh.dev/simple_todo/")
+You can see it in action [here](https://rahbuhkeh.dev/simple_todo/)
 
 <img src="./readme-images/screenshot.PNG">
 
