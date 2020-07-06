@@ -1,22 +1,23 @@
-(function() {
+(function () {
   const addTodoButton = document.getElementById("add-todo");
-  addTodoButton.addEventListener("click", newTodo);
-
-  // use enter key for adding todo
-  document.addEventListener("keyup", e => {
-    if (e.key === "Enter") newTodo();
-  });
+  const hideCompletedBtn = document.getElementById("hide-complete");
 
   let displayCompleted = true;
 
-  const hideCompletedBtn = document.getElementById("hide-complete");
-  hideCompletedBtn.addEventListener("click", () => {
-    displayCompleted = !displayCompleted;
-    renderTodos(getTodoList());
+  // use enter key for adding todo
+  document.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") newTodo();
   });
 
   document.getElementById("remove-complete").addEventListener("click", () => {
-    updateList(getTodoList().filter(todo => !todo.completed));
+    updateList(getTodoList().filter((todo) => !todo.completed));
+  });
+
+  addTodoButton.addEventListener("click", newTodo);
+
+  hideCompletedBtn.addEventListener("click", () => {
+    displayCompleted = !displayCompleted;
+    renderTodos(getTodoList());
   });
 
   function newTodo() {
@@ -34,7 +35,7 @@
     return {
       id: String(Date.now()),
       text: todoText,
-      completed: false
+      completed: false,
     };
   }
 
@@ -63,12 +64,13 @@
 
     spanElem.addEventListener("click", () => {
       const todoIndex = locateTodoItem(id);
-      const toggleList = getTodoList().map(todo => {
+      const toggleList = getTodoList().map((todo) => {
         return { ...todo };
       });
-      if (todoIndex >= 0) {
-        toggleList[todoIndex].completed = !toggleList[todoIndex].completed;
-      }
+
+      todoIndex >= 0 &&
+        (toggleList[todoIndex].completed = !toggleList[todoIndex].completed);
+
       updateList(toggleList);
     });
 
@@ -79,14 +81,14 @@
     const iconElem = document.createElement("i");
     iconElem.classList.add("fa", "fa-trash");
     iconElem.addEventListener("click", () => {
-      updateList(getTodoList().filter(todo => todo.id !== id));
+      updateList(getTodoList().filter((todo) => todo.id !== id));
     });
 
     return iconElem;
   }
 
   function updateList(updatedTodos) {
-    newTodosArr = updatedTodos.map(todo => {
+    newTodosArr = updatedTodos.map((todo) => {
       return { ...todo };
     });
 
@@ -106,7 +108,7 @@
         ? (hideCompletedBtn.innerText = "Hide Completed")
         : (hideCompletedBtn.innerText = "Show Completed");
 
-      todosArray.forEach(todo => {
+      todosArray.forEach((todo) => {
         if (displayCompleted || !todo.completed) {
           todoListUl.appendChild(createTodoItem(todo));
         }
@@ -129,7 +131,7 @@
   }
 
   function locateTodoItem(id) {
-    return getTodoList().findIndex(todo => todo.id === id);
+    return getTodoList().findIndex((todo) => todo.id === id);
   }
 
   renderTodos(getTodoList());
